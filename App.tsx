@@ -3,16 +3,14 @@ import { LoginScreen } from './src/screens/authorization/login/LoginScreen';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { mapping, light as lightTheme } from '@eva-design/eva';
-import { View } from 'react-native';
-import { RegisterScreen } from './src/screens/authorization/register/RegisterScreen';
+import { AppContainer } from './src/navigators/switchNavigators';
 
 export default function App() {
   return (
     <React.Fragment>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider mapping={mapping} theme={lightTheme}>
-        <LoginScreen></LoginScreen>
-        <RegisterScreen></RegisterScreen>
+        <AppContainer></AppContainer>
       </ApplicationProvider>
     </React.Fragment>
   );

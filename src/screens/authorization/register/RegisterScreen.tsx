@@ -3,6 +3,8 @@ import { Layout,Button, Text, Input, Icon, Card, Spinner } from '@ui-kitten/comp
 import { styles } from './RegisterStyle';
 import { View, GestureResponderEvent } from 'react-native';
 import { IRegisterProp } from '../../../interfaces/authorization/IRegister';
+import { __ScreenNames } from '../../../constants/screenNames';
+import { ButtonStyle } from '../../../utils/styles/ButtonStyle';
 
 const RegisterScreen = (props: IRegisterProp) => {
 
@@ -38,9 +40,14 @@ const RegisterScreen = (props: IRegisterProp) => {
         <Icon {...style} name={secureTextEntry ? 'eye-off' : 'eye'}/>
     );
 
-    const StarIcon = (style) => (
-        <Icon {...style} name='star'/>
-    );
+    /**
+     * redirect to login screen
+     */
+    const redirectToLogin = () =>{
+        const {navigation} = props;
+        const { LOGIN_SCREEN } = __ScreenNames;
+        navigation.navigate(LOGIN_SCREEN)
+    }
 
     /**
      * destructure the styles 
@@ -77,10 +84,10 @@ const RegisterScreen = (props: IRegisterProp) => {
                     />
                     <View style={{alignItems:"center"}}>
                         {registeringIn && <Spinner style={{position:"absolute",top:0}} />}
-                        {!registeringIn && <Button style={{borderRadius:50, width:'100%'}} status='primary' onPress={registerHandler}> Register</Button>}
+                        {!registeringIn && <Button style={[ButtonStyle.common]} status='primary' onPress={registerHandler}> Register</Button>}
                     </View>
                     <View style={{marginTop:10}}>
-                        <Button appearance='ghost' status='primary'>Login</Button>
+                        <Button appearance='ghost' style={[ButtonStyle.common]} status='primary' onPress={redirectToLogin}>Login</Button>
                     </View>
                 </Card>
             </Layout>
