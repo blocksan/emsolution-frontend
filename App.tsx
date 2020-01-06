@@ -1,9 +1,8 @@
 import React from 'react';
-import { LoginScreen } from './src/screens/authorization/login/LoginScreen';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { mapping, light as lightTheme } from '@eva-design/eva';
-import { AppContainer } from './src/navigators/switchNavigators';
+import { AppContainer } from './src/navigators';
 
 export default function App() {
   return (

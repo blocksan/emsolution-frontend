@@ -13,7 +13,7 @@ const HistoryAttendanceScreen = (props: IHistoryAttendanceProp) => {
     const { container } = styles;
     return (
         <View style={container}> 
-            <Text category='h5'>CheckInAttendanceScreen</Text>
+            <Text category='h5'>HistoryAttendanceScreen</Text>
         </View>
     )
 }
