@@ -1,5 +1,5 @@
 import React from 'react';
-import {ICheckInAttendanceProp} from './../../../interfaces/attendance/ICheckInAttendance';
+import {ICheckInAttendanceProp} from '../../../interfaces/screens/attendance/ICheckInAttendance';
 import { styles } from './CheckInAttendanceStyle';
 import { View } from 'react-native';
 import { Text } from '@ui-kitten/components';

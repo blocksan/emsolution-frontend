@@ -1,21 +1,34 @@
 import React from 'react';
-import {ILoginProp} from './../../../interfaces/authorization/ILogin';
+import { connect } from 'react-redux';
+import {ILoginProp} from '../../../interfaces/screens/authentication/ILogin';
 import { Layout,Button, Text, Input, Icon, Card, Spinner } from '@ui-kitten/components';
 import { styles } from './LoginStyle';
 import { View, GestureResponderEvent } from 'react-native';
 import { __ScreenNames } from '../../../constants/screenNames';
 import { ButtonStyle } from '../../../utils/styles/ButtonStyle';
+import { loginAction } from './../../../store/rootAction';
 
 const LoginScreen = (props: ILoginProp) => {
 
     /**
      * all the destructure for the screen
      */
-    const { navigation } = props;
+    const { navigation, authenticated, loginLoading, loginDispatcher } = props;
+
+    
     /**
      * destructure the screen names
      */
     const { REGISTER_SCREEN, DASHBOARD_SCREEN } = __ScreenNames;
+
+    /**
+     * check if user is authenticated, then take him to dashboard
+     */
+
+    if(authenticated){
+        navigation.navigate(DASHBOARD_SCREEN)
+    }
+
     /**
      * destructure the styles 
      */
@@ -24,11 +37,11 @@ const LoginScreen = (props: ILoginProp) => {
     /**
      * react useState hook to set the value for login
      */
-    const [loginIn, setLogin] = React.useState(false);
+    // const [loginIn, setLogin] = React.useState(false);
 
     const loginHandler = (event: GestureResponderEvent) => {
-        setLogin(!loginIn);
-        navigation.navigate(DASHBOARD_SCREEN)
+        // setLogin(!loginIn);
+        loginDispatcher(username, password);
     }
 
     /**
@@ -65,7 +78,7 @@ const LoginScreen = (props: ILoginProp) => {
     return (
             <Layout style={container}>
                 <Card style={[ loginCard]}>
-                    <Text style={{textAlign:"center",marginTop:-10, marginBottom:20}}category='h5'>Login</Text>
+                    <Text style={{textAlign:"center",marginTop:-10, marginBottom:20}}category='h5'>Login </Text>
                     <Input
                         placeholder='username'
                         value={username}
@@ -82,8 +95,8 @@ const LoginScreen = (props: ILoginProp) => {
                         style={marginInput}
                     />
                     <View style={{alignItems:"center"}}>
-                        {loginIn && <Spinner style={{position:"absolute",top:0}} />}
-                        {!loginIn && <Button style={[ButtonStyle.common]} status='primary' onPress={loginHandler}> Login</Button>}
+                        {loginLoading && <Spinner style={{position:"absolute",top:0}} />}
+                        {!loginLoading && <Button style={[ButtonStyle.common]} status='primary' onPress={loginHandler}> Login</Button>}
                     </View>
                     <View style={{marginTop:10}}>
                         <Button appearance='ghost' status='primary' style={[ButtonStyle.common]} onPress={redirectToRegister}>Register</Button>
@@ -93,4 +106,20 @@ const LoginScreen = (props: ILoginProp) => {
     )
 }
 
-export { LoginScreen }
+const stateToProps = state => {
+    return {
+        authenticated: state.auth.authenticated,
+        loginLoading: state.auth.loginLoading,
+        loginError: state.auth.loginError
+    };
+};
+
+const dispatchers = dispatch => {
+    return {
+        loginDispatcher: (email, password) => dispatch(loginAction(email, password)),
+    };
+};
+
+const LoginScreenContainer = connect(stateToProps, dispatchers)(LoginScreen);
+
+export { LoginScreenContainer }

@@ -1,0 +1,1 @@
+export const __defaultError ="Error occured"

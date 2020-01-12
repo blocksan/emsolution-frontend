@@ -1,5 +1,5 @@
 import React from 'react';
-import { IHistoryAttendanceProp } from './../../../interfaces/attendance/IHistoryAttendance';
+import { IHistoryAttendanceProp } from '../../../interfaces/screens/attendance/IHistoryAttendance';
 import { styles } from './HistoryAttendanceStyle';
 import { View } from 'react-native';
 import { Text } from '@ui-kitten/components';

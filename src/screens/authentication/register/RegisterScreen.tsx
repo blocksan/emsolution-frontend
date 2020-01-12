@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout,Button, Text, Input, Icon, Card, Spinner } from '@ui-kitten/components';
 import { styles } from './RegisterStyle';
 import { View, GestureResponderEvent } from 'react-native';
-import { IRegisterProp } from '../../../interfaces/authorization/IRegister';
+import { IRegisterProp } from '../../../interfaces/screens/authentication/IRegister';
 import { __ScreenNames } from '../../../constants/screenNames';
 import { ButtonStyle } from '../../../utils/styles/ButtonStyle';
 
