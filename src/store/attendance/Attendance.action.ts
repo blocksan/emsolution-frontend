@@ -4,31 +4,31 @@ import { axiosInstance } from '../../utils/axios';
 import {failedState, loadingState, successState} from './../../interfaces/IApiResponse'
 import { __defaultError } from '../../constants/defaultError';
 import { ICheckInSuccess, ICheckInFailed, ICheckOutFailed } from '../../interfaces/stores/actions/IAttendance.action';
+import { __checkin } from '../../fixtures/__checkin';
 
 const { CHECK_IN, CHECK_OUT } = actions;
 
 /**
  * Action to checkin the user
  */
-export const checkInAction = () => {
+export const checkInAction = (latitude: number, longitude: number) => {
     return async dispatch => {
         dispatch({ payload: { ...loadingState }, type: CHECK_IN });
         try {
-
-            const currentLat = ""; //get the current lat, long from the location api
-            const currentLong = "";
             const body = {
-                currentLat,
-                currentLong
+                currentLat:latitude,
+                currentLong: longitude
             }
-            
-            const response = await axiosInstance.post(`/api/attendance/checkIn`, body);
-            if (response.data.status === 'success') {
+            //TODO: const response = await axiosInstance.post(`/api/attendance/checkIn`, body);
+            const response = __checkin.checkinFixture;
+            if (response.data.status) {
                 const result = response.data as ICheckInSuccess;
                 return dispatch({
                     payload: { 
                         ...successState,
-                        lastCheckedIn: result.data.lastCheckedIn
+                        data:{
+                            lastCheckedIn: result.data.lastCheckedIn
+                        }
                     },
                     type: CHECK_IN,
                 });
@@ -49,14 +49,11 @@ export const checkInAction = () => {
  * Action to checkout the user's attendance
  * @param userId : mongoose id of the user
  */
-export const checkOutAction = (userId: string) => {
+export const checkOutAction = () => {
     return async dispatch => {
         dispatch({ payload: { ...loadingState }, type: CHECK_OUT });
         try {
-            const body = {
-                userId
-            }
-            const response = await axiosInstance.post(`/api/attendance/checkOut`, body);
+            const response = await axiosInstance.post(`/api/attendance/checkOut`);
             if (response.data.status === 'success') {
                 return dispatch({
                     payload: { ...successState},

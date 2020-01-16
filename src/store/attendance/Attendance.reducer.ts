@@ -2,6 +2,12 @@ import { IAttendanceReducer, IAttendanceAction } from '../../interfaces/stores/r
 import * as actions from '../../utils/actions';
 
 const initialState: IAttendanceReducer = {
+    checkinLoading: false,
+    checkoutLoading: false,
+    checkinError:  undefined,
+    checkoutError: undefined,
+    checkoutSuccess: false,
+    checkinSuccess: false
 };
 
 const {CHECK_IN, CHECK_OUT} = actions;
@@ -13,15 +19,17 @@ const AttendanceReducer = (state = initialState, action: IAttendanceAction) => {
                 return { ...state, checkinLoading: action.payload.loading };
             }
             if (action.payload.status) {
-                const {isCheckedInRecently} = action.payload.data;
+                const {lastCheckedIn} = action.payload.data;
                 return {
                     ...state,
+                    checkinSuccess: action.payload.status,
                     checkinLoading: action.payload.loading,
-                    isCheckedInRecently
+                    lastCheckedIn
                 };
             }
             return {
                 ...state,
+                checkinSuccess: action.payload.status,
                 checkinError: action.payload.errors,
                 checkinLoading: action.payload.loading,
             };
@@ -33,10 +41,12 @@ const AttendanceReducer = (state = initialState, action: IAttendanceAction) => {
             if (action.payload.status) {
                 return {
                     ...state,
+                    checkoutSuccess: action.payload.status,
                     checkoutLoading: action.payload.loading
                 };
             }
             return { ...state, 
+                checkoutSuccess: action.payload.status,
                 checkoutError: action.payload.errors, 
                 checkoutLoading: action.payload.loading };
         default:

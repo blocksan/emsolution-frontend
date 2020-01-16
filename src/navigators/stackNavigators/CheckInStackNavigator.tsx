@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from "react-navigation-stack";
-import { CheckInAttendanceScreen } from '../../screens/attendance/checkIn/CheckInAttendanceScreen';
+import { CheckInAttendanceScreenContainer } from '../../screens/attendance/checkIn/CheckInAttendanceScreen';
 import { __ScreenNames } from "../../constants/screenNames";
 import { RenderIcon } from "../../components/renderIconDynamically";
 
@@ -12,7 +12,7 @@ const {CHECKIN_SCREEN} = __ScreenNames;
 
 const CheckInStackNavigator = createStackNavigator({
         [CHECKIN_SCREEN] : {
-            screen: CheckInAttendanceScreen
+            screen: CheckInAttendanceScreenContainer
         }
     }
     ,{
